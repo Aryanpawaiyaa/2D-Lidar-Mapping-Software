@@ -50,7 +50,5 @@ Thumbs.db
 
 # Logs & Capture artifacts
 *.log
-security_captures/*.jpg
-security_captures/*.png
-security_captures/*.log
+security_captures/
 !security_captures/.gitkeep
