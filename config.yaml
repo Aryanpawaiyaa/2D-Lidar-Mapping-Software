@@ -1,0 +1,68 @@
+# Persistent 2D Lidar Mapping System Configuration
+# Sensor: YDLIDAR TG50 (360 ToF 2D Lidar)
+
+lidar:
+  # Connection settings
+  # Priority: 'auto', 'sdk' (ydlidar Python package), 'cpp_bridge' (thin C++ SDK bridge),
+  # 'serial' (pure Python direct protocol driver), 'fake' (replay file), 'sim' (raycaster)
+  driver_mode: "auto"
+  port: "/dev/ttyUSB0"
+  baudrate: 512000
+  sample_rate_khz: 20          # 10, 18, or 20 kHz (typical 20)
+  scan_frequency_hz: 7.0       # 5 to 12 Hz (typical factory default 7 Hz)
+  reconnect_timeout_sec: 2.0
+  auto_detect_ports: true
+
+  # Hardware specifications & limits
+  range_min_m: 0.05
+  range_max_m: 50.0            # Hardware max
+  clip_range_max_m: 25.0       # Useful indoor threshold to discard ultra-noisy distant returns
+  enable_intensity: true
+
+  # Preprocessing
+  outlier_neighbor_radius_m: 0.15
+  outlier_min_neighbors: 2
+  angular_downsample_deg: 0.25 # Downsample beam density for uniform processing (0.0 = off)
+
+slam:
+  # Coordinate & motion constraints
+  min_translation_kf_m: 0.15   # Minimum translation to spawn a new keyframe
+  min_rotation_kf_rad: 0.10    # Minimum rotation (~5.7 deg) to spawn a new keyframe
+  submap_max_keyframes: 30     # Maximum keyframes per submap before freezing
+  submap_max_extent_m: 12.0    # Spatial size limit of a single submap
+
+  # Scan Matching (Likelihood Field + Robust Gauss-Newton)
+  search_window_xy_m: 0.25     # Coarse correlative search window around motion prior
+  search_window_theta_rad: 0.20 # ~11.5 deg
+  max_iterations: 25
+  convergence_tol: 1e-4
+  huber_delta_m: 0.10          # Huber loss cutoff for dynamic obstacle rejection
+
+  # Degeneracy Detection (Corridors / Featureless Walls)
+  min_hessian_eigenvalue: 15.0 # Threshold below which pose is flagged as under-constrained
+
+occupancy_grid:
+  resolution_m: 0.05           # 5 cm per cell
+  p_occ: 0.75                  # Probability for hit
+  p_free: 0.35                 # Probability for miss
+  log_odds_min: -4.0           # Clamp min
+  log_odds_max: 4.0            # Clamp max
+  occupied_thresh: 0.65        # Probability above which cell is occupied
+  free_thresh: 0.25            # Probability below which cell is free
+
+relocalization:
+  coarse_grid_res_m: 0.20      # Coarse correlative grid step
+  coarse_angle_step_deg: 3.0   # Coarse angular step
+  min_confidence_score: 0.70   # Score required to accept global relocalization
+  merge_confidence_score: 0.75 # Score required to link Room B into Room A
+  consecutive_matches_needed: 3 # Temporal consistency count before merging maps
+
+persistence:
+  maps_dir: "maps"
+  autosave_interval_sec: 15.0
+  default_map_name: "current_session"
+
+ui:
+  web_host: "127.0.0.1"
+  web_port: 8080
+  stream_fps: 15

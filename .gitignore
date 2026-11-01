@@ -1,54 +1,50 @@
-# Python
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
+
+# C extensions
 *.so
-.Python
+
+# Distribution / packaging
 build/
-develop-eggs/
 dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-share/python-wheels/
 *.egg-info/
-.installed.cfg
-*.egg
 
-# Virtual environments
-.env
-.venv
-env/
+# Virtual Environments
+.venv/
 venv/
+env/
 ENV/
-env.bak/
-venv.bak/
 
-# IDE & Editor files
+# Testing & Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Logs & Recordings
+logs/
+*.npz
+*.jsonl
+
+# Generated Maps & Sessions (keep maps directory via .gitkeep)
+maps/*
+!maps/.gitkeep
+
+# IDEs & Editors
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
-*.sublime-project
-*.sublime-workspace
 
-# Operating System files
+# Operating System Files
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
 Thumbs.db
 
-# Logs & Capture artifacts
-*.log
-security_captures/
-!security_captures/.gitkeep
+# Documentation / README
+README.md
+readme.md
+readme.me
+
+

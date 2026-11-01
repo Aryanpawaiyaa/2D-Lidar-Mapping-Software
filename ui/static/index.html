@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Persistent 2D Lidar SLAM - YDLIDAR TG50</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="app-container">
+    <header class="app-header">
+      <div class="header-left">
+        <div class="logo-badge">TG50</div>
+        <h1>Persistent 2D Lidar SLAM</h1>
+        <span id="status-badge" class="status-badge tracking">TRACKING</span>
+      </div>
+      <div class="header-right">
+        <div class="telemetry-item">
+          <span class="label">Confidence:</span>
+          <div class="meter-bar"><div id="confidence-bar" class="meter-fill" style="width: 90%;"></div></div>
+          <span id="confidence-val" class="val">90%</span>
+        </div>
+        <div class="telemetry-item">
+          <span class="label">Pose:</span>
+          <span id="pose-val" class="val">X: 0.00m | Y: 0.00m | 0.0°</span>
+        </div>
+        <div class="telemetry-item">
+          <span class="label">Submaps:</span>
+          <span id="submaps-val" class="val">1</span>
+        </div>
+        <div class="telemetry-item">
+          <span class="label">Keyframes:</span>
+          <span id="keyframes-val" class="val">0</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="main-content">
+      <div class="canvas-container" id="canvas-container">
+        <canvas id="slam-canvas"></canvas>
+        <div class="legend">
+          <div class="legend-item"><span class="swatch room-a"></span> Saved Map (Room A)</div>
+          <div class="legend-item"><span class="swatch room-active"></span> Active Submap</div>
+          <div class="legend-item"><span class="swatch room-unlinked"></span> New Room (Unlinked)</div>
+          <div class="legend-item"><span class="swatch lidar-pts"></span> Live Beams</div>
+        </div>
+      </div>
+
+      <aside class="sidebar">
+        <h3>Map & Session Management</h3>
+        <div class="control-group">
+          <label for="map-name-input">Map Name:</label>
+          <input type="text" id="map-name-input" value="session_room_a" placeholder="Enter map name">
+        </div>
+        
+        <div class="button-grid">
+          <button id="btn-save" class="btn btn-primary">Save Session</button>
+          <button id="btn-load" class="btn btn-secondary">Load Session</button>
+          <button id="btn-export" class="btn btn-success">Export ROS (PNG+YAML)</button>
+          <button id="btn-reset-view" class="btn btn-outline">Reset Pan / Zoom</button>
+        </div>
+
+        <hr>
+
+        <h3>Diagnostics</h3>
+        <div class="diag-card">
+          <div class="diag-row"><span>Residual Error:</span><span id="diag-residual">0.02 m</span></div>
+          <div class="diag-row"><span>Degeneracy Check:</span><span id="diag-degen" class="diag-ok">OK (Constrained)</span></div>
+          <div class="diag-row"><span>Connection:</span><span id="diag-conn" class="diag-ok">Live WebSocket</span></div>
+        </div>
+
+        <div class="instructions-card">
+          <p><strong>Navigation:</strong> Drag with mouse to pan. Use scroll wheel to zoom.</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
+
